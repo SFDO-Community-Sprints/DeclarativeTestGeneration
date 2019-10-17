@@ -1,0 +1,23 @@
+minimum_cumulusci_version: '3.0.1'
+project:
+    name: DeclarativeTestGeneration
+    package:
+        name:  DeclarativeTestGeneration
+        api_version: '46.0'
+
+tasks:
+    robot:
+        options:
+            suites: robot/DeclarativeTestGeneration/tests
+            options:
+                outputdir: robot/DeclarativeTestGeneration/results
+
+    robot_testdoc:
+        options:
+            path: robot/DeclarativeTestGeneration/tests
+            output: robot/DeclarativeTestGeneration/doc/DeclarativeTestGeneration_tests.html
+
+flows:
+    config_qa:
+        1.1:
+            task: deploy_qa_config
