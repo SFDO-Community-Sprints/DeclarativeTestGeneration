@@ -126,7 +126,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <startElementReference>Assign_Opportunity</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>Opportunity</name>
         <dataType>SObject</dataType>
