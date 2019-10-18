@@ -8,7 +8,16 @@
     </types>
     <types>
         <members>Opportunity.Opportunity_Size__c</members>
+        <members>Flow_Test_Template__mdt.Template__c</members>
         <name>CustomField</name>
+    </types>
+    <types>
+        <members>Flow_Test_Template.Test_Template</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>Flow_Test_Template__mdt</members>
+        <name>CustomObject</name>
     </types>
     <types>
         <members>Account_Update_Contact_Email</members>
@@ -21,6 +30,7 @@
         <members>Opportunity-Opportunity %28Sales%29 Layout</members>
         <members>Opportunity-Opportunity %28Support%29 Layout</members>
         <members>Opportunity-Opportunity Layout</members>
+        <members>Flow_Test_Template__mdt-Flow Test Template Layout</members>
         <name>Layout</name>
     </types>
     <types>

@@ -9,6 +9,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
+    <customMetadataTypeAccesses>
+        <enabled>false</enabled>
+        <name>Flow_Test_Template__mdt</name>
+    </customMetadataTypeAccesses>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Flow_Test_Template__mdt.Template__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.AccountId</field>
@@ -74,6 +83,9 @@
         <field>Opportunity.Type</field>
         <readable>true</readable>
     </fieldPermissions>
+    <layoutAssignments>
+        <layout>Flow_Test_Template__mdt-Flow Test Template Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Opportunity-Opportunity Layout</layout>
     </layoutAssignments>
