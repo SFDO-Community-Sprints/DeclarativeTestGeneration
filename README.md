@@ -3,7 +3,6 @@
 Add a brief description of this project here, in Markdown format.
 It will be shown on the main page of the project's GitHub repository.
 
-<<<<<<< HEAD
 ## Development
 
 To work on this project in a scratch org:
@@ -11,7 +10,7 @@ To work on this project in a scratch org:
 1. [Set up CumulusCI](https://cumulusci.readthedocs.io/en/latest/tutorial.html)
 2. Run `cci flow run dev_org --org dev` to deploy this project.
 3. Run `cci org browser dev` to open the org in your browser.
-=======
+
 ### Project Vision (Your first task as a team)
 Current test framework is handled by APEX code and is not easily applicable to declarative customization. A test framework for declarative automation, with a regression test function created using Flow, administrators could create new customizations without worrying about whether a validation rule or Process Builder automation was breaking other components of their organization.
 This framework and test functionality would be most helpful for administrators and implementation partners adding declarative customizations to Salesforce organizations where code maintenance is not practical.
