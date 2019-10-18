@@ -127,7 +127,7 @@
         <objectType>Contact</objectType>
     </variables>
     <variables>
-        <name>ContactId</name>
+        <name>Contact.Id</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
