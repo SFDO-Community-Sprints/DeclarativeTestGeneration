@@ -1,4 +1,3 @@
-minimum_cumulusci_version: '3.0.1'
 project:
     name: DeclarativeTestGeneration
     package:
@@ -18,6 +17,7 @@ tasks:
             output: robot/DeclarativeTestGeneration/doc/DeclarativeTestGeneration_tests.html
 
 flows:
-    config_qa:
-        1.1:
-            task: deploy_qa_config
+    deploy_unmanaged:
+        steps:
+            4:
+                task: None
