@@ -13,15 +13,15 @@ This framework and test functionality would be most helpful for administrators a
 
 ### Project Team Accomplishments
 1. Created the "Business Rquirements" wiki page that explains the specs for a "crawl" phase
-2. Create the "Solution Components" wiki page
-3. Created template APEX class
-4. Demonstrated proof of concept with test flows for Workflow Rules and Process Builder, successfully retrieving 'result' variable string from flows.
+1. Create the "Solution Components" wiki page
+1. Created template APEX class
+1. Demonstrated proof of concept with test flows for Workflow Rules and Process Builder, successfully retrieving 'result' variable string from flows.
 
 ### Future Contributions (AKA what were you unable to finish at the Sprint)
 
 1. Modify template class to guarantee running user uniqueness (Username must be unique globally across test and production usernames).
-2. Develop UI for end users to invoke template class.
-3. Need controller class for UI with button to enter flow name, select running user Profile, with deploy/commit/save action.
-4. ToolingAPI grabs template APEX class, passes in flow name and user Profile.
-
->>>>>>> a05f5c7d43e216802a52a62146c19a512d263d89
+1. Develop UI for end users to invoke template class.
+1. Need controller class for UI with button to enter flow name, select running user Profile, with deploy/commit/save action.
+1. ToolingAPI grabs template APEX class, passes in flow name and user Profile.
+1. Assert test flow is active
+1. Intra-test flow logging by returning more comprehensive result object out of flow
