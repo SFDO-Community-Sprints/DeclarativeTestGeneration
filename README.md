@@ -14,6 +14,10 @@ To work on this project in a scratch org:
 ### Project Vision (Your first task as a team)
 Current test framework is handled by APEX code and is not easily applicable to declarative customization. A test framework for declarative automation, with a regression test function created using Flow, administrators could create new customizations without worrying about whether a validation rule or Process Builder automation was breaking other components of their organization.
 This framework and test functionality would be most helpful for administrators and implementation partners adding declarative customizations to Salesforce organizations where code maintenance is not practical.
+### Project Team
+* Team Leader(s): Chris Pifer
+* GitHub Scribe(s): Brian Ricter, Fatma Ahmed
+* List of all Contributors: Jim Letts, Jason Cook, Brian Weldon
 
 ### Project Resources
 * Wiki within this repository contains Business Requirements and Limitations.
