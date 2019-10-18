@@ -43,7 +43,7 @@
         <label>Create Contact</label>
         <locationX>316</locationX>
         <locationY>62</locationY>
-        <assignRecordIdToReference>Contact.Id</assignRecordIdToReference>
+        <assignRecordIdToReference>Contact_Id</assignRecordIdToReference>
         <connector>
             <targetReference>Update_Account_Phone</targetReference>
         </connector>
@@ -71,12 +71,14 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Contact.Id</elementReference>
+                <elementReference>Contact_Id</elementReference>
             </value>
         </filters>
         <object>Contact</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>HomePhone</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
     </recordLookups>
     <recordUpdates>
         <name>Update_Account_Phone</name>
@@ -127,7 +129,7 @@
         <objectType>Contact</objectType>
     </variables>
     <variables>
-        <name>Contact.Id</name>
+        <name>Contact_Id</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

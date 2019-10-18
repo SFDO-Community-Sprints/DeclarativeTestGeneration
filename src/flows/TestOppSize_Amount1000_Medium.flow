@@ -122,6 +122,8 @@
         <object>Opportunity</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Opportunity_Size__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
     </recordLookups>
     <startElementReference>Assign_Opportunity</startElementReference>
     <status>Draft</status>
