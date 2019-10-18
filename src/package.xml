@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DeclarativeTestGeneration</fullName>
+    <types>
+        <members>Account_Update_Contact_Email</members>
+        <members>Test_Flow_Account_Update_Process_Builder</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Contact.All_Contacts</members>
+        <name>ListView</name>
+    </types>
+    <version>46.0</version>
+</Package>
