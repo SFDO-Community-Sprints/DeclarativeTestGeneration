@@ -24,4 +24,4 @@ This framework and test functionality would be most helpful for administrators a
 1. Need controller class for UI with button to enter flow name, select running user Profile, with deploy/commit/save action.
 1. ToolingAPI grabs template APEX class, passes in flow name and user Profile.
 1. Assert test flow is active
-1. Intra-test flow logging by returning more comprehensive result object out of flow
+1. Intra-test logging by returning more comprehensive result object out of flow
