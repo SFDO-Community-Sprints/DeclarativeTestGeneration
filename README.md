@@ -25,6 +25,8 @@ This framework and test functionality would be most helpful for administrators a
 ### Project Team Accomplishments
 1. Created the "Business Rquirements" wiki page that explains the specs for a "crawl" phase
 2. Create the "Solution Components" wiki page
+3. Created template APEX class
+4. Demonstrated proof of concept with test flows for Workflow Rules and Process Builder, successfully retrieving 'result' variable string from flows.
 
 ### Future Contributions (AKA what were you unable to finish at the Sprint)
 
