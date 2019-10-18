@@ -71,7 +71,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ContactId</elementReference>
+                <elementReference>Contact.Id</elementReference>
             </value>
         </filters>
         <object>Contact</object>
