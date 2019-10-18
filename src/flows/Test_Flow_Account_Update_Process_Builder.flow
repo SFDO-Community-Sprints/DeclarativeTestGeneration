@@ -1,10 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Assign_Result</name>
+        <label>Assign Result</label>
+        <locationX>804</locationX>
+        <locationY>67</locationY>
+        <assignmentItems>
+            <assignToReference>result</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>resultFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>debug</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contact.HomePhone</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Test_Decision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Failure</name>
+        <label>Failure</label>
+        <locationX>1139</locationX>
+        <locationY>46</locationY>
+        <assignmentItems>
+            <assignToReference>result</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&apos;We failed&apos;</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Success</name>
+        <label>Success</label>
+        <locationX>981</locationX>
+        <locationY>253</locationY>
+        <assignmentItems>
+            <assignToReference>result</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Success</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Test_Decision</name>
+        <label>Test Decision</label>
+        <locationX>981</locationX>
+        <locationY>74</locationY>
+        <defaultConnector>
+            <targetReference>Success</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Phone_Number_not_equal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Contact.HomePhone</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>555-123-4567</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Failure</targetReference>
+            </connector>
+            <label>Phone Number not equal</label>
+        </rules>
+    </decisions>
     <description>Test flow for PB - Account: Update Phone Number</description>
     <formulas>
-        <name>result</name>
+        <name>resultFormula</name>
         <dataType>String</dataType>
-        <expression>IF({!Contact.HomePhone}= &quot;555-123-4567&quot;, &quot;Success&quot;, &quot;Error: The Contact&apos;s home phone number is not equal to the Account phone number.&quot;)</expression>
+        <expression>IF{{!Contact.HomePhone}= &quot;555-123-4567&quot;, &quot;Success&quot;, &quot;Error: The Contact&apos;s home phone number is not equal to the Account phone number.&quot;)</expression>
     </formulas>
     <interviewLabel>Test Flow - Account Update Process Builder {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Test Flow - Account Update Process Builder</label>
@@ -67,6 +141,9 @@
         <locationX>639</locationX>
         <locationY>62</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Result</targetReference>
+        </connector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -75,10 +152,9 @@
             </value>
         </filters>
         <object>Contact</object>
+        <outputReference>Contact</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>HomePhone</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
     </recordLookups>
     <recordUpdates>
         <name>Update_Account_Phone</name>
@@ -103,8 +179,14 @@
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
-    <startElementReference>Create_Account</startElementReference>
-    <status>Draft</status>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Create_Account</targetReference>
+        </connector>
+    </start>
+    <status>InvalidDraft</status>
     <variables>
         <name>Account</name>
         <dataType>SObject</dataType>
@@ -133,6 +215,20 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>debug</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>result</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>true</isOutput>
     </variables>
 </Flow>
