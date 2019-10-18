@@ -2,20 +2,13 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DeclarativeTestGeneration</fullName>
     <types>
-<<<<<<< HEAD
-        <members>Account_Update_Contact_Email</members>
-        <members>Test_Flow_Account_Update_Process_Builder</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>Contact.All_Contacts</members>
-        <name>ListView</name>
-=======
         <members>Opportunity.Opportunity_Size__c</members>
         <name>CustomField</name>
     </types>
     <types>
+        <members>Account_Update_Contact_Email</members>
         <members>TestOppSize_Amount1000_Medium</members>
+        <members>Test_Flow_Account_Update_Process_Builder</members>
         <name>Flow</name>
     </types>
     <types>
@@ -24,6 +17,10 @@
         <members>Opportunity-Opportunity %28Support%29 Layout</members>
         <members>Opportunity-Opportunity Layout</members>
         <name>Layout</name>
+    </types>
+    <types>
+        <members>Contact.All_Contacts</members>
+        <name>ListView</name>
     </types>
     <types>
         <members>Admin</members>
@@ -43,7 +40,6 @@
         <members>Opportunity.UpdateOppSize-Medium</members>
         <members>Opportunity.UpdateOppSize-Small</members>
         <name>WorkflowRule</name>
->>>>>>> 4219237059e50bd2e67750c36db651b011ac0855
     </types>
     <version>46.0</version>
 </Package>
