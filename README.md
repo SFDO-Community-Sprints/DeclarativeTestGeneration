@@ -19,6 +19,12 @@ This framework and test functionality would be most helpful for administrators a
 * Wiki within this repository contains Business Requirements and Limitations.
 
 ### Project Team Accomplishments
+1. Created the following metadata to help with the MVP:
+* Created a custom field in Opportunity object called "Opportunity Size"
+* Three workflow rules on opportunity object that updates the "Opportunity Size" field based on the "Amount" field.
+* A process builder to
+
+2. 
 
 ### Future Contributions (AKA what were you unable to finish at the Sprint)
 
