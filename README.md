@@ -3,7 +3,9 @@
 ### Project Vision (Your first task as a team)
 **The dream** - I can create an autolaunch flow, declare it as a "test" flow, add standard flow components to test any functionality in my org, drop-in an assertion component, and run my flow as part of the standard apex test tooling, providing code coverage and all the functionality of a first-class unit test.  The platform just doesn't support this dream out of the box. Acknowledging this limitation, the sprint group asked the question: how close can we get to this goal in spite of platform limitations?
 
-**What is here** - At the moment, this is a bare-bones proof of concept. With time, investment, and community contributions it could be developed into an open-source package. 
+**What is here** - This is a proof of concept and a proposed design pattern for exchange of data between auto-launched visual flows and apex tests. It allows for Visual Flows to be a full-fledged, first-class citizen in the testing world, with all test logic and assertions living within a visual flow. Apex is only used as a wrapper to interact with the standard apex testing tools.
+
+With time, investment, and community contributions this could be developed into an open-source package (see to do list!). 
 
 **How do I use it?**
 1. Install it (CumulusCI config included in the repo)
@@ -38,3 +40,4 @@ This framework and test functionality would be most helpful for administrators a
 1. Modify template class to guarantee running user uniqueness (Username must be unique globally across test and production usernames).
 1. Assert test if flow is active
 1. Consider returning a custom apex container object to provide for better options for flow of information between test code and flows returning more comprehensive result object out of flow
+More details on this in the repo.
