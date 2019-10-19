@@ -9,14 +9,19 @@
     <types>
         <members>Opportunity.Opportunity_Size__c</members>
         <members>Flow_Test_Template__mdt.Template__c</members>
+        <members>TestFlowRun__mdt.Flow_Api_Name__c</members>
+        <members>TestFlowRun__mdt.Run_As_Profile__c</members>
         <name>CustomField</name>
     </types>
     <types>
         <members>Flow_Test_Template.Test_Template</members>
+        <members>TestFlowRun.X1</members>
+        <members>TestFlowRun.X2</members>
         <name>CustomMetadata</name>
     </types>
     <types>
         <members>Flow_Test_Template__mdt</members>
+        <members>TestFlowRun__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -31,6 +36,7 @@
         <members>Opportunity-Opportunity %28Support%29 Layout</members>
         <members>Opportunity-Opportunity Layout</members>
         <members>Flow_Test_Template__mdt-Flow Test Template Layout</members>
+        <members>TestFlowRun__mdt-TestFlowRun Layout</members>
         <name>Layout</name>
     </types>
     <types>
