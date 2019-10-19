@@ -7,6 +7,7 @@
 At the moment, this is a bare-bones proof of concept, that with time and investment can be developed into an open-source package to deliver this functionality. 
 
 **How do I use it?**
+1. Install the code and package
 1. Create a standard auto-launch flow.  
 1. Test any assertions in the flow using a decision or formula and assign the result to a variable called 'result'.  If the test fails, store a meaningful error message describing the error to the result variable.  Make sure you catch any DML errors.
 1. Create a new entry in the Test Flow Run custom metadata type.  
