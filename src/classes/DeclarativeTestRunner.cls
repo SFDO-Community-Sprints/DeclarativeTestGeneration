@@ -124,5 +124,134 @@ public with sharing class DeclarativeTestRunner {
 
         Test.stopTest();
     }
+    /**
+     * testRun3 - additional test support
+     * Queries testFlowRun metadata type record #3 through #50, which do not yet exist.
+     * Calls a standardized helper class to process the metadata record.
+     */
+    @IsTest
+    static void testRun3(){
+        String result = testRunner('3');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun4(){
+        String result = testRunner('4');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun5(){
+        String result = testRunner('5');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun6(){
+        String result = testRunner('6');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun7(){
+        String result = testRunner('7');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun8(){
+        String result = testRunner('8');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun9(){
+        String result = testRunner('9');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun10(){
+        String result = testRunner('10');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun11(){
+        String result = testRunner('11');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+    @IsTest
+    static void testRun12(){
+        String result = testRunner('12');
+        System.assertEquals('Success', result);
+        Test.stopTest();
+    }
+
+
+    /**
+     * testRunner helper class
+     *
+     * @param runNumber
+     *
+     * @return
+     */
+
+    static string testRunner(String runNumber) {
+
+        string result; //variable that will record the result of the test flow
+        string profileName; //variable to store run as profile
+        string flowName;
+        List<TestFlowRun__mdt> thisTestRun = [SELECT Id, Flow_Api_Name__c, Run_As_Profile__c FROM TestFlowRun__mdt WHERE Label =: runNumber LIMIT 1];
+        if(thisTestRun.size() > 0){
+            if(thisTestRun[0].Run_As_Profile__c == null){
+                profileName = 'System Administrator';
+            } else {
+                profileName = thisTestRun[0].Run_As_Profile__c;
+            }
+            flowName = thisTestRun[0].Flow_Api_Name__c;
+            system.debug('Running ' + flowName);
+
+            list<profile> testProfile = [SELECT Id FROM Profile WHERE Name =: profileName LIMIT 1];
+
+
+
+            //create and insert the test user to run the flow test as
+            user testUser = new User(Alias = 'FlowT', Email= 'test' + 'Test@test.com',
+                    EmailEncodingKey='UTF-8', LastName='test',
+                    LanguageLocaleKey='en_US', LocaleSidKey='en_US',
+                    ProfileId = testProfile[0].Id, TimeZoneSidKey='America/Los_Angeles',
+                    UserName= 'test3452345' + 'Test@test.com');
+
+
+            //start the test
+
+            Map<String, Object> nothing = new Map<String, Object>();
+            Test.startTest();
+
+            //run the test as a test user with the chosen profile
+            System.runAs(testUser){
+                Flow.Interview testFlow = Flow.Interview.createInterview(flowName, nothing);
+
+                //Check to ensure that the flow is found and if it is run it.
+                if (testFlow != null){
+                    testFlow.start();
+                    result = (string)(testFlow.getVariableValue('result'));
+                }
+
+            }
+        } else {
+            Test.startTest();
+            //No metadata found, assume no test to run here.
+            System.debug('No flowTestRunner metadata found for run '+runNumber+', nothing to test.' +
+                    'If you expected a test to run, check your metadata naming');
+            result = 'Success';
+        }
+
+        return result;
+
+    }
 
 }
