@@ -11,7 +11,7 @@ At the moment, this is a bare-bones proof of concept, that with time and investm
 1. Create a standard auto-launch flow.  
 1. Test any assertions in the flow using a decision or formula and assign the result to a variable called 'result'.  If the test fails, store a meaningful error message describing the error to the result variable.  Make sure you catch any DML errors.
 1. Create a new entry in the Test Flow Run custom metadata type.  
-1. Set the label to a number, currently 1 and 2 are examples of passing and failing tests.  3-12 are available with the current code.
+1. Set the label to a number, currently 1 and 2 are examples of passing and failing tests.  3-12 are available with the current code, but code can be modified to support more flows with copy and paste.  This is a stop-gap approach (see to-do)
 1. Enter the api name of the flow and, optionally, if you want the flow to run as a non-admin user.
 1. Open the dev console and run the declarative test runner test class.
 See the wiki for more details on how this works and how it can be extended.
