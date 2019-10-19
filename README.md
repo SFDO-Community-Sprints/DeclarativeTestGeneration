@@ -2,8 +2,10 @@
 
 ### Project Vision (Your first task as a team)
 **The dream** - I can create an autolaunch flow, declare it as a "test" flow, add standard flow components to test any functionality in my org, drop-in an assertion component, and run my flow as part of the standard apex test tooling, providing code coverage and all the functionality of a first-class unit test.  The platform just doesn't support this dream out of the box. This sprint group asked the question, how close can we get to this dream in light of platform limitations.
+
 **What is here**
 At the moment, this is a bare-bones proof of concept, that with time and investment can be developed into an open-source package to deliver this functionality. 
+
 **How do I use it?**
 1. Create a standard auto-launch flow.  
 1. Test any assertions in the flow using a decision or formula and assign the result to a variable called 'result'.  If the test fails, store a meaningful error message describing the error to the result variable.  Make sure you catch any DML errors.
