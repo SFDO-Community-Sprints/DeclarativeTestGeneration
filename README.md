@@ -28,7 +28,7 @@ This framework and test functionality would be most helpful for administrators a
 * Wiki within this repository contains Business Requirements and Limitations.
 
 ### Project Team Accomplishments
-1. Created the "Business Rquirements" wiki page that explains the specs for a "crawl" phase
+1. Created the "Business Requirements" wiki page that explains the specs for a "crawl" phase
 1. Create the "Solution Components" wiki page
 1. Created template APEX class
 1. Demonstrated proof of concept with test flows for Workflow Rules and Process Builder, successfully retrieving 'result' variable string from flows.
@@ -36,7 +36,7 @@ This framework and test functionality would be most helpful for administrators a
 ### Future Contributions (AKA what were you unable to finish at the Sprint)
 
 1. Develop UI for end users to create custom metadata without requiring the setup UI.  
-1. Current code relies on a single apex test class to call flows.  This should be depreciated and replaced with a button that dynamically generates and deploys an apex test class per custom metadata record over the ToolingAPI using the template metadata record.
+1. Current code relies on a single apex test class to call flows.  This should be deprecated and replaced with a button that dynamically generates and deploys an apex test class per custom metadata record over the ToolingAPI using the template metadata record.
 1. Modify template class to guarantee running user uniqueness (Username must be unique globally across test and production usernames).
 1. Assert test if flow is active
 1. Consider returning a custom apex container object to provide for better options for flow of information between test code and flows returning more comprehensive result object out of flow
