@@ -7,6 +7,8 @@
 
 With time, investment, and community contributions this could be developed into an open-source package (see to do list!). 
 
+**Who is this for** - This framework and test functionality would be most helpful for administrators and implementation partners adding declarative customizations to Salesforce organizations where code maintenance is not practical.
+
 **How do I use it?**
 1. Install it (CumulusCI config included in the repo)
 1. Create a standard auto-launch flow.  
@@ -18,7 +20,7 @@ With time, investment, and community contributions this could be developed into 
 See the wiki for more details on how this works and how it can be extended.
 
 Current test framework is handled by APEX code and is not easily applicable to declarative customization. A test framework for declarative automation, with a regression test function created using Flow, administrators could create new customizations without worrying about whether a validation rule or Process Builder automation was breaking other components of their organization.
-This framework and test functionality would be most helpful for administrators and implementation partners adding declarative customizations to Salesforce organizations where code maintenance is not practical.
+
 ### Project Team
 * Team Leader(s): Chris Pifer
 * GitHub Scribe(s): Brian Ricter, Fatma Ahmed
