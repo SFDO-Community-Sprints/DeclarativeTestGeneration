@@ -1,7 +1,15 @@
 # DeclarativeTestGeneration
 
 ### Project Vision (Your first task as a team)
-**The dream** - I can create an autolaunch flow, declare it as a "test" flow, add standard flow components to test any functionality in my org, drop-in an assertion component, and run my flow as part of the standard apex test tooling, providing code coverage and all the functionality of a first-class unit test.  The platform just doesn't support this dream out of the box. Acknowledging this limitation, the sprint group asked the question: how close can we get to this goal in spite of platform limitations?
+**The dream** - I can create an autolaunch flow, declare it as a "test" flow, and have it function as a full-fledged test. Specifically it should:
+1) Provide code coverage 
+1) Test meaningful assertions 
+1) Allow actionable error/failure messages.
+1) Use standard flow components
+1) Allow for testing any functionality in my org, declarative or code
+1) Allow me to run tests as any profile with run test permission
+
+When complete, this project will allow for all of these.
 
 **What is here** - This is a proof of concept and a proposed design pattern for exchange of data between auto-launched visual flows and apex tests. It allows for Visual Flows to be a full-fledged, first-class citizen in the testing world, with all test logic and assertions living within a visual flow. Apex is only used as a wrapper to interact with the standard apex testing tools.
 
@@ -36,7 +44,7 @@ Current test framework is handled by APEX code and is not easily applicable to d
 1. Demonstrated proof of concept with test flows for Workflow Rules and Process Builder, successfully retrieving 'result' variable string from flows.
 
 ### Future Contributions (AKA what were you unable to finish at the Sprint)
-
+See Open Issues List
 1. Develop UI for end users to create custom metadata without requiring the setup UI.  
 1. Current code relies on a single apex test class to call flows.  This should be deprecated and replaced with a button that dynamically generates and deploys an apex test class per custom metadata record over the ToolingAPI using the template metadata record.
 1. Modify template class to guarantee running user uniqueness (Username must be unique globally across test and production usernames).
