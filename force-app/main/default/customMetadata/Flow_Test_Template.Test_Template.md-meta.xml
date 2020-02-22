@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Test_Template</label>
+    <protected>false</protected>
+    <values>
+        <field>Template__c</field>
+        <value xsi:type="xsd:string">/*--
+----This class was created automatically as part of the dynamic test generation tool
+----The method name corresponds to the name of an autolaunch flow and the class name
+----corresponds to the name of a custom metadata type record. The information below
+----including created date and created by was also automatically generated
+----Created By:   **CREATEDBY**
+----Created Date: **CREATEDDATE** 
+--*/
+
+@IsTest
+public class **CLASSNAME**{
+    @IsTest
+    static void **FLOWNAME**() {
+    
+        string result; //variable that will record the result of the test flow
+        string profileName = &#39;**PROFILE**&#39;; //the profile that will be assigned to the test user if applicable. Defaults to Admin.
+        
+        list&lt;profile&gt; testProfile = [SELECT Id FROM Profile WHERE Name =: profileName LIMIT 1];
+        
+        //if no matching profile is found, use the system administrator profile.
+        if(testProfile.size() == 0){
+            testProfile = [SELECT Id FROM Profile WHERE Name =: &#39;System Administrator&#39; LIMIT 1];
+        }
+        
+        //create and insert the test user to run the flow test as
+        user testUser = new User(Alias = &#39;FlowT&#39;, Email= &#39;test&#39; + &#39;Test@test.com&#39;, 
+                                 EmailEncodingKey=&#39;UTF-8&#39;, LastName=&#39;test&#39;, 
+                                 LanguageLocaleKey=&#39;en_US&#39;, LocaleSidKey=&#39;en_US&#39;, 
+                                 ProfileId = testProfile[0].Id, TimeZoneSidKey=&#39;America/Los_Angeles&#39;, 
+                                 UserName= &#39;test3452345&#39; + &#39;Test@test.com&#39;);
+                                 
+    
+        //start the test
+        
+        Map&lt;String, Object&gt; nothing = new Map&lt;String, Object&gt;();
+        Test.startTest();
+        
+        //run the test as a test user with the chosen profile
+        System.runAs(testUser){
+            Flow.Interview testFlow = Flow.Interview.createInterview(&#39;**FLOWNAME**&#39;, nothing);
+            
+            //Check to ensure that the flow is found and if it is run it.
+            if (testFlow != null){
+                testFlow.start();
+                result = (string)(testFlow.getVariableValue(&#39;result&#39;));
+            }
+            
+            system.assertEquals(&#39;Success&#39;, result);        
+        }
+        
+        Test.stopTest();
+    }
+}</value>
+    </values>
+</CustomMetadata>

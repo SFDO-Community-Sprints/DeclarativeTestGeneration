@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Template for the apex test class that is generated when a new flow test class is created.</description>
+    <label>Flow Test Template</label>
+    <pluralLabel>Flow Test Templates</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

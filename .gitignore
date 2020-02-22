@@ -2,7 +2,7 @@
 .cci
 .sfdx
 /src.orig
-/force-app
+/src
 
 # Python
 *.pyc

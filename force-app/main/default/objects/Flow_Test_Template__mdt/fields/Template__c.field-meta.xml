@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Template__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Apex test code template that is used to generate new flow test classes</inlineHelpText>
+    <label>Template</label>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>
