@@ -5,6 +5,9 @@ It will be shown on the main page of the project's GitHub repository.
 
 ## Development
 
+See Wiki for further resources. 
+See Issues for how you can help.
+
 To work on this project in a scratch org:
 
 1. [Set up CumulusCI](https://cumulusci.readthedocs.io/en/latest/tutorial.html)
