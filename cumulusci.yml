@@ -4,8 +4,6 @@ project:
     package:
         name:  DeclarativeTestGeneration
         api_version: '48.0'
-    dependencies:
-        - github: 'https://github.com/selfuntitled/apex-toolingapi'
     source_format: sfdx
 
 tasks:
