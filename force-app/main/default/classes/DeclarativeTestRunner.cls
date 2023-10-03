@@ -5,21 +5,29 @@
 @IsTest
 public with sharing class DeclarativeTestRunner {
     
+    private static List<String> testFlows = new List<String>();
+    private static List<String> testFlowsNameList = new List<String>();
+
     private static List<String> getFlowList(){
-        List<String> testFlows = new List<String>();
+        //List<String> testFlows = new List<String>();
         List<FlowDefinitionView> testFlowsDefinitions = new List<FlowDefinitionView>();
-        try{
-            testFlowsDefinitions = [SELECT Id, ApiName, ProcessType FROM FlowDefinitionView WHERE Label like 'Test%'];
-        } catch(DmlException e) {
-            System.debug('Error - no flows meet naming criteria');
+        
+        if(testFlows.size() == 0){
+            try{
+                System.debug('Initializing flow list');
+                testFlowsDefinitions = [SELECT Id, Label, ApiName, ProcessType FROM FlowDefinitionView WHERE Label like 'Test%'];
+            } catch(DmlException e) {
+                System.debug('Error - no flows meet naming criteria, ensure flow api names begin with test_');
+            }
         }
         for(FlowDefinitionView thisFlow : testFlowsDefinitions){
             testFlows.add(thisFlow.ApiName);
+            testFlowsNameList.add(thisFlow.Label);
         }
         return testFlows;
     }
     /** 
-    @isTest
+    @isTest(SeeAllData=false)
     static void testRun(){
         List<String> flowList = new List<String>();
         flowList.addAll(getFlowList());
@@ -37,14 +45,16 @@ public with sharing class DeclarativeTestRunner {
         string profileName; //variable to store run as profile
         String flowName;
         List<String> flowList = new List<String>();
+
         flowList.addAll(getFlowList());
         if(flowList.size() > flowNumber){
             flowName = flowList[flowNumber];
         }
-        List<TestFlowRun__mdt> thisTestRun = [SELECT Id, Flow_Api_Name__c, Run_As_Profile__c FROM TestFlowRun__mdt LIMIT 1];
-        System.debug('Execution slot number '+ String.valueOf(flowNumber));
-        System.debug('Executing for ' + flowName);
-        if(flowName != null){
+        /** Stub for setting running user for flows */
+        if(flowName != null){            
+            List<TestFlowRun__mdt> thisTestRun = [SELECT Id, Flow_Api_Name__c, Run_As_Profile__c FROM TestFlowRun__mdt LIMIT 1];
+            System.debug('Execution slot number '+ String.valueOf(flowNumber));
+            System.debug('Executing for ' + flowName);
             if(thisTestRun[0].Run_As_Profile__c == null){
                 profileName = 'System Administrator';
             } else {
@@ -82,616 +92,743 @@ public with sharing class DeclarativeTestRunner {
             Test.startTest();
             //No flow found, this flow slot is empty.
             System.debug(flowNumber);
-            System.debug('No flow found named '+flowName+', nothing to test.' +
-                    'If you expected a test to run, check your flow naming');
-            result = 'Success';
+            if(flowName == null ){
+                System.debug('Execution Slot empty, disregard');
+            } else {
+                System.debug('No flow found named '+flowName+', nothing to test.' +
+                    'If you expected a test to run, check your flow naming');            
+            }
+            result = 'Success';            
         }
         return result;
 
     }
 
+    static void validateTestResults(String result, Integer flowNumber){
+        String flowName;
+        if(result == null){
+            result = 'SUCCESSS';
+            System.debug('No flow found, bypassing test');
+        }
+        if(testFlowsNameList.size() == 0){
+            System.debug('Test to avoid re-initalizing flow list');
+            getFlowList();
+        }
+        if(testFlowsNameList.size() > flowNumber){
+            flowName = testFlowsNameList[flowNumber];
+        }        
+        String successCriteria = flowName + ' - SUCCESS'; 
+        String formattedResult = flowName + ' - ' + result.toUpperCase();
+        System.assertEquals(successCriteria, formattedResult);
+    }
+
 
     /** Test execution slots, allowing for individual tests to run in parallel **/
-    @IsTest
-    static void testRun1(){        
-        String result = testRunner(1);
-        System.assertEquals('Success', result);
+    @isTest(SeeAllData=false)
+    static void testRun0(){  
+        Integer testNumber = 0;      
+        String result = testRunner(testNumber);
+        //validateTestResults(result, 0); //Skipped as package includes example test failure
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
+    static void testRun1(){
+        Integer testNumber = 1;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
+        Test.stopTest();
+    }        
+    @isTest(SeeAllData=false)
     static void testRun2(){
-        String result = testRunner(2);
-        System.assertEquals('Success', result);
+        Integer testNumber = 2;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun3(){
-        String result = testRunner(3);
-        System.assertEquals('Success', result);
+        Integer testNumber = 3;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    /**
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun4(){
-        String result = testRunner(4);
-        System.assertEquals('Success', result);
+        Integer testNumber = 4;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun5(){
-        String result = testRunner(5);
-        System.assertEquals('Success', result);
+        Integer testNumber = 5;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun6(){
-        String result = testRunner(6);
-        System.assertEquals('Success', result);
+        Integer testNumber = 6;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun7(){
-        String result = testRunner(7);
-        System.assertEquals('Success', result);
+        Integer testNumber = 7;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun8(){
-        String result = testRunner(8);
-        System.assertEquals('Success', result);
+        Integer testNumber = 8;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun9(){
-        String result = testRunner(9);
-        System.assertEquals('Success', result);
+        Integer testNumber = 9;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun10(){
-        String result = testRunner(10);
-        System.assertEquals('Success', result);
+        Integer testNumber = 10;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun11(){
-        String result = testRunner(11);
-        System.assertEquals('Success', result);
+        Integer testNumber = 11;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun12(){
-        String result = testRunner(12);
-        System.assertEquals('Success', result);
+        Integer testNumber = 12;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun13(){
-        String result = testRunner(13);
-        System.assertEquals('Success', result);
+        Integer testNumber = 13;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun14(){
-        String result = testRunner(14);
-        System.assertEquals('Success', result);
+        Integer testNumber = 14;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun15(){
-        String result = testRunner(15);
-        System.assertEquals('Success', result);
+        Integer testNumber = 15;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun16(){
-        String result = testRunner(16);
-        System.assertEquals('Success', result);
+        Integer testNumber = 16;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun17(){
-        String result = testRunner(17);
-        System.assertEquals('Success', result);
+        Integer testNumber = 17;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun18(){
-        String result = testRunner(18);
-        System.assertEquals('Success', result);
+        Integer testNumber = 18;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun19(){
-        String result = testRunner(19);
-        System.assertEquals('Success', result);
+        Integer testNumber = 19;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun20(){
-        String result = testRunner(20);
-        System.assertEquals('Success', result);
+        Integer testNumber = 20;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun21(){
-        String result = testRunner(21);
-        System.assertEquals('Success', result);
+        Integer testNumber = 21;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun22(){
-        String result = testRunner(22);
-        System.assertEquals('Success', result);
+        Integer testNumber = 22;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun23(){
-        String result = testRunner(23);
-        System.assertEquals('Success', result);
+        Integer testNumber = 23;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun24(){
-        String result = testRunner(24);
-        System.assertEquals('Success', result);
+        Integer testNumber = 24;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun25(){
-        String result = testRunner(25);
-        System.assertEquals('Success', result);
+        Integer testNumber = 25;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun26(){
-        String result = testRunner(26);
-        System.assertEquals('Success', result);
+        Integer testNumber = 26;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun27(){
-        String result = testRunner(27);
-        System.assertEquals('Success', result);
+        Integer testNumber = 27;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun28(){
-        String result = testRunner(28);
-        System.assertEquals('Success', result);
+        Integer testNumber = 28;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun29(){
-        String result = testRunner(29);
-        System.assertEquals('Success', result);
+        Integer testNumber = 29;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun30(){
-        String result = testRunner(30);
-        System.assertEquals('Success', result);
+        Integer testNumber = 30;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun31(){
-        String result = testRunner(31);
-        System.assertEquals('Success', result);
+        Integer testNumber = 31;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun32(){
-        String result = testRunner(32);
-        System.assertEquals('Success', result);
+        Integer testNumber = 32;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun33(){
-        String result = testRunner(33);
-        System.assertEquals('Success', result);
+        Integer testNumber = 33;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun34(){
-        String result = testRunner(34);
-        System.assertEquals('Success', result);
+        Integer testNumber = 34;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun35(){
-        String result = testRunner(35);
-        System.assertEquals('Success', result);
+        Integer testNumber = 35;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun36(){
-        String result = testRunner(36);
-        System.assertEquals('Success', result);
+        Integer testNumber = 36;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun37(){
-        String result = testRunner(37);
-        System.assertEquals('Success', result);
+        Integer testNumber = 37;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun38(){
-        String result = testRunner(38);
-        System.assertEquals('Success', result);
+        Integer testNumber = 38;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun39(){
-        String result = testRunner(39);
-        System.assertEquals('Success', result);
+        Integer testNumber = 39;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun40(){
-        String result = testRunner(40);
-        System.assertEquals('Success', result);
+        Integer testNumber = 40;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun41(){
-        String result = testRunner(41);
-        System.assertEquals('Success', result);
+        Integer testNumber = 41;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun42(){
-        String result = testRunner(42);
-        System.assertEquals('Success', result);
+        Integer testNumber = 42;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun43(){
-        String result = testRunner(43);
-        System.assertEquals('Success', result);
+        Integer testNumber = 43;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun44(){
-        String result = testRunner(44);
-        System.assertEquals('Success', result);
+        Integer testNumber = 44;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun45(){
-        String result = testRunner(45);
-        System.assertEquals('Success', result);
+        Integer testNumber = 45;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun46(){
-        String result = testRunner(46);
-        System.assertEquals('Success', result);
+        Integer testNumber = 46;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun47(){
-        String result = testRunner(47);
-        System.assertEquals('Success', result);
+        Integer testNumber = 47;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun48(){
-        String result = testRunner(48);
-        System.assertEquals('Success', result);
+        Integer testNumber = 48;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun49(){
-        String result = testRunner(49);
-        System.assertEquals('Success', result);
+        Integer testNumber = 49;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun50(){
-        String result = testRunner(50);
-        System.assertEquals('Success', result);
+        Integer testNumber = 50;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun51(){
-        String result = testRunner(51);
-        System.assertEquals('Success', result);
+        Integer testNumber = 51;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun52(){
-        String result = testRunner(52);
-        System.assertEquals('Success', result);
+        Integer testNumber = 52;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun53(){
-        String result = testRunner(53);
-        System.assertEquals('Success', result);
+        Integer testNumber = 53;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun54(){
-        String result = testRunner(54);
-        System.assertEquals('Success', result);
+        Integer testNumber = 54;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun55(){
-        String result = testRunner(55);
-        System.assertEquals('Success', result);
+        Integer testNumber = 55;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun56(){
-        String result = testRunner(56);
-        System.assertEquals('Success', result);
+        Integer testNumber = 56;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun57(){
-        String result = testRunner(57);
-        System.assertEquals('Success', result);
+        Integer testNumber = 57;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun58(){
-        String result = testRunner(58);
-        System.assertEquals('Success', result);
+        Integer testNumber = 58;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun59(){
-        String result = testRunner(59);
-        System.assertEquals('Success', result);
+        Integer testNumber = 59;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun60(){
-        String result = testRunner(60);
-        System.assertEquals('Success', result);
+        Integer testNumber = 60;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun61(){
-        String result = testRunner(61);
-        System.assertEquals('Success', result);
+        Integer testNumber = 61;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun62(){
-        String result = testRunner(62);
-        System.assertEquals('Success', result);
+        Integer testNumber = 62;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun63(){
-        String result = testRunner(63);
-        System.assertEquals('Success', result);
+        Integer testNumber = 63;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun64(){
-        String result = testRunner(64);
-        System.assertEquals('Success', result);
+        Integer testNumber = 64;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun65(){
-        String result = testRunner(65);
-        System.assertEquals('Success', result);
+        Integer testNumber = 65;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun66(){
-        String result = testRunner(66);
-        System.assertEquals('Success', result);
+        Integer testNumber = 66;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun67(){
-        String result = testRunner(67);
-        System.assertEquals('Success', result);
+        Integer testNumber = 67;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun68(){
-        String result = testRunner(68);
-        System.assertEquals('Success', result);
+        Integer testNumber = 68;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun69(){
-        String result = testRunner(69);
-        System.assertEquals('Success', result);
+        Integer testNumber = 69;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun70(){
-        String result = testRunner(70);
-        System.assertEquals('Success', result);
+        Integer testNumber = 70;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun71(){
-        String result = testRunner(71);
-        System.assertEquals('Success', result);
+        Integer testNumber = 71;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun72(){
-        String result = testRunner(72);
-        System.assertEquals('Success', result);
+        Integer testNumber = 72;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun73(){
-        String result = testRunner(73);
-        System.assertEquals('Success', result);
+        Integer testNumber = 73;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun74(){
-        String result = testRunner(74);
-        System.assertEquals('Success', result);
+        Integer testNumber = 74;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun75(){
-        String result = testRunner(75);
-        System.assertEquals('Success', result);
+        Integer testNumber = 75;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun76(){
-        String result = testRunner(76);
-        System.assertEquals('Success', result);
+        Integer testNumber = 76;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun77(){
-        String result = testRunner(77);
-        System.assertEquals('Success', result);
+        Integer testNumber = 77;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun78(){
-        String result = testRunner(78);
-        System.assertEquals('Success', result);
+        Integer testNumber = 78;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun79(){
-        String result = testRunner(79);
-        System.assertEquals('Success', result);
+        Integer testNumber = 79;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun80(){
-        String result = testRunner(80);
-        System.assertEquals('Success', result);
+        Integer testNumber = 80;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun81(){
-        String result = testRunner(81);
-        System.assertEquals('Success', result);
+        Integer testNumber = 81;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun82(){
-        String result = testRunner(82);
-        System.assertEquals('Success', result);
+        Integer testNumber = 82;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun83(){
-        String result = testRunner(83);
-        System.assertEquals('Success', result);
+        Integer testNumber = 83;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun84(){
-        String result = testRunner(84);
-        System.assertEquals('Success', result);
+        Integer testNumber = 84;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun85(){
-        String result = testRunner(85);
-        System.assertEquals('Success', result);
+        Integer testNumber = 85;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun86(){
-        String result = testRunner(86);
-        System.assertEquals('Success', result);
+        Integer testNumber = 86;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun87(){
-        String result = testRunner(87);
-        System.assertEquals('Success', result);
+        Integer testNumber = 87;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun88(){
-        String result = testRunner(88);
-        System.assertEquals('Success', result);
+        Integer testNumber = 88;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun89(){
-        String result = testRunner(89);
-        System.assertEquals('Success', result);
+        Integer testNumber = 89;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun90(){
-        String result = testRunner(90);
-        System.assertEquals('Success', result);
+        Integer testNumber = 90;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun91(){
-        String result = testRunner(91);
-        System.assertEquals('Success', result);
+        Integer testNumber = 91;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun92(){
-        String result = testRunner(92);
-        System.assertEquals('Success', result);
+        Integer testNumber = 92;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun93(){
-        String result = testRunner(93);
-        System.assertEquals('Success', result);
+        Integer testNumber = 93;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun94(){
-        String result = testRunner(94);
-        System.assertEquals('Success', result);
+        Integer testNumber = 94;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun95(){
-        String result = testRunner(95);
-        System.assertEquals('Success', result);
+        Integer testNumber = 95;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun96(){
-        String result = testRunner(96);
-        System.assertEquals('Success', result);
+        Integer testNumber = 96;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun97(){
-        String result = testRunner(97);
-        System.assertEquals('Success', result);
+        Integer testNumber = 97;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun98(){
-        String result = testRunner(98);
-        System.assertEquals('Success', result);
+        Integer testNumber = 98;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun99(){
-        String result = testRunner(99);
-        System.assertEquals('Success', result);
+        Integer testNumber = 99;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
-    }
-    @IsTest
+    }        
+    @isTest(SeeAllData=false)
     static void testRun100(){
-        String result = testRunner(100);
-        System.assertEquals('Success', result);
+        Integer testNumber = 100;      
+        String result = testRunner(testNumber);        
+        validateTestResults(result, testNumber);
         Test.stopTest();
     }
-     */
 }
