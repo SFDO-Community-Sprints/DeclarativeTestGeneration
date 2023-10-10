@@ -164,6 +164,7 @@
             <label>Success</label>
         </rules>
     </decisions>
+    <description>Template flow for the Declarative Test Generation package. Provides a simple example of a test flow that verifies Account insert.</description>
     <formulas>
         <name>ErrorResult</name>
         <dataType>String</dataType>
