@@ -107,7 +107,7 @@ public with sharing class DeclarativeTestRunner {
     static void validateTestResults(String result, Integer flowNumber){
         String flowName;
         if(result == null){
-            result = 'SUCCESSS';
+            result = 'SUCCESS';
             System.debug('No flow found, bypassing test');
         }
         if(testFlowsNameList.size() == 0){
