@@ -5,7 +5,7 @@ A simple, lightweight project that allows Salesforce Flows to run as Apex Unit t
 ## How to use
 
 1. Install the package
-1. Write a flow that tests some piece of functionality
+1. Write a flow that tests some piece of functionality and set the name to start with test\_
 1. Add a decision to the end of the flow that checks if the automation ran as expected
 1. Create a text variable called Result, set it for output
 1. If the functionality ran as expected, set the output variable to 'Success'
@@ -23,7 +23,7 @@ A simple, lightweight project that allows Salesforce Flows to run as Apex Unit t
 1. If the query returned some other count of records, set the Result variable to a formula that shows the expected and actual count of records returned.
 1. Save the flow, and set the flow name to start with Test\_
 
-Note - you do not need to activate your flow, and it does not need to be triggered by another flow or automation.
+Note - you do not need to activate your flow, and it does not need to set up other automation to trigger it, the flow will be triggered automatically.
 
 ##Key Naming Conventions
 All testing flows must have:
