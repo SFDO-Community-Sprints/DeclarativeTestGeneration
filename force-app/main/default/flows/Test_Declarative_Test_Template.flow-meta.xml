@@ -151,13 +151,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>SetupSize</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>5.0</numberValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>SetSuccessResult</targetReference>
             </connector>
@@ -170,9 +163,9 @@
         <dataType>String</dataType>
         <expression>&apos;Error - Inserted &apos; + TEXT({!InsertedRecords}) + &apos; account records. Expected &apos; + TEXT({!SetupSize})</expression>
     </formulas>
-    <interviewLabel>Test Account Insert {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Test Declarative Test Template {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
-    <label>Test Account Insert</label>
+    <label>Test Declarative Test Template</label>
     <loops>
         <name>Loop_Names</name>
         <label>Loop Names</label>

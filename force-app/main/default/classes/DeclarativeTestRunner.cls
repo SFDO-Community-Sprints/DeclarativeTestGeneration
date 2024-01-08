@@ -15,7 +15,7 @@ public with sharing class DeclarativeTestRunner {
         if(testFlows.size() == 0){
             try{
                 System.debug('Initializing flow list');
-                testFlowsDefinitions = [SELECT Id, Label, ApiName, ProcessType FROM FlowDefinitionView WHERE Label like 'Test%'];
+                testFlowsDefinitions = [SELECT Id, Label, ApiName, ProcessType FROM FlowDefinitionView WHERE Label like 'Test%' and IsTemplate = false];
             } catch(DmlException e) {
                 System.debug('Error - no flows meet naming criteria, ensure flow api names begin with test_');
             }
@@ -26,19 +26,6 @@ public with sharing class DeclarativeTestRunner {
         }
         return testFlows;
     }
-    /** 
-    @isTest(SeeAllData=false)
-    static void testRun(){
-        List<String> flowList = new List<String>();
-        flowList.addAll(getFlowList());
-        
-        for(String flowName : flowList){
-            String result = testRunner(flowName);
-            System.assertEquals(flowName + '| Result: Success', flowName + '| Result: ' + result);            
-        }
-        Test.stopTest();
-    }
-    **/
     
     static string testRunner(Integer flowNumber) {
         string result; //variable that will record the result of the test flow
