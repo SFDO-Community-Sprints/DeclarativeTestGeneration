@@ -115,7 +115,7 @@ public with sharing class DeclarativeTestRunner {
     static void testRun0(){  
         Integer testNumber = 0;      
         String result = testRunner(testNumber);
-        //validateTestResults(result, 0); //Skipped as package includes example test failure
+        validateTestResults(result, 0); 
         Test.stopTest();
     }        
     @isTest(SeeAllData=false)
