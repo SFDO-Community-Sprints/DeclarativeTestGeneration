@@ -33,6 +33,19 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Insert_Failure_Error</name>
+        <label>Assign Insert Failure Error</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>result</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InsertErrorResult</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>checkResultList</name>
         <label>checkResultList</label>
         <locationX>182</locationX>
@@ -163,6 +176,12 @@
         <dataType>String</dataType>
         <expression>&apos;Error - Inserted &apos; + TEXT({!InsertedRecords}) + &apos; account records. Expected &apos; + TEXT({!SetupSize})</expression>
     </formulas>
+    <formulas>
+        <description>Formula to return insert error text</description>
+        <name>InsertErrorResult</name>
+        <dataType>String</dataType>
+        <expression>&quot;Error - Account Insert Failed, error returned: &quot; + {!$Flow.FaultMessage}</expression>
+    </formulas>
     <interviewLabel>Test Declarative Test Template {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Test Declarative Test Template</label>
@@ -207,6 +226,9 @@
         <connector>
             <targetReference>get_Accounts</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Insert_Failure_Error</targetReference>
+        </faultConnector>
         <inputReference>Account</inputReference>
     </recordCreates>
     <recordLookups>
